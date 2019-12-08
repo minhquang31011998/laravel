@@ -12,5 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('home');
+});
+Route::prefix('task')->group(function () {
+Route::get('/task/complete/3', function {
+	return redirect('/');
+})->name('todo.task.complete');
+Route::get('/task/reset/3', function {
+	return redirect('/');
+})->name('todo.task.reset');
+
 });
