@@ -118,7 +118,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="table-text"><div>Làm bài tập PHP  </div></td>
+                        <td class="table-text"><div>Làm bài tập PHP   </div></td>
                         <!-- Task Complete Button -->
                         <td>
                             <a href="{{ url('task/complete/1') }}" type="submit" class="btn btn-success">
