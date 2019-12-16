@@ -102,9 +102,9 @@ Route::group([
 	Route::get('index', 'TaskController@index');
 	Route::get('create', 'TaskController@create');
 	Route::post('store', 'TaskController@store');
-	Route::get('show', 'TaskController@show');
-	Route::get('edit', 'TaskController@edit');
-	Route::put('update', 'TaskController@update');
+	Route::get('show/{id}', 'TaskController@show');
+	Route::get('edit/{id}', 'TaskController@edit');
+	Route::put('update/{id}', 'TaskController@update');
 	Route::delete('destroy/{id}', 'TaskController@destroy');
 	Route::get('task/complete/{id}', 'TaskController@complete');
 	Route::get('task/reComplete/{id}', 'TaskController@reComplete');

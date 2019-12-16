@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Frontend;
-
+use App\Task;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,8 +14,15 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('ds');
-    }
+       $tasks = Task::where('status', 1)
+       ->orderBy('name', 'desc')
+       ->take(5)
+       ->get();
+     // dd($tasks);
+       return view('ds')->with([
+        'tasks'=>$tasks
+    ]);
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -40,7 +47,7 @@ class TaskController extends Controller
         // dd($request->all());
         $input = $request->only(['name', 'deadline']);
         dd($input);
-       
+
     }
 
     /**
@@ -51,7 +58,10 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+        $task = Task::find($id);
+        $task = Task::findOrFail($id);
+        $task = Task::firstOrFail($id);
+        dd($task->name);
     }
 
     /**

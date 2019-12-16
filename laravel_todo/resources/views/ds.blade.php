@@ -32,141 +32,105 @@
     </style>
 </head>
 <body id="app-layout">
-<nav class="navbar navbar-default">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+
+                <!-- Branding Image -->
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    Danh sách công việc
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
     <div class="container">
-        <div class="navbar-header">
+        <div class="col-sm-offset-2 col-sm-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Thêm công việc mới
+                </div>
 
-            <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/') }}">
-                Danh sách công việc
-            </a>
-        </div>
+                <div class="panel-body">
+                    <!-- Display Validation Errors -->
 
-    </div>
-</nav>
-
-<div class="container">
-    <div class="col-sm-offset-2 col-sm-8">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Thêm công việc mới
-            </div>
-
-            <div class="panel-body">
-                <!-- Display Validation Errors -->
-
-            <!-- New Task Form -->
-                <form action="{{ route('task.store')}}" method="POST" class="form-horizontal">
-                {{ csrf_field() }}
+                    <!-- New Task Form -->
+                    <form action="{{ route('task.store')}}" method="POST" class="form-horizontal">
+                        {{ csrf_field() }}
 
 
-                <!-- Task Name -->
-                    <div class="form-group">
-                        <label for="task-name" class="col-sm-3 control-label">Tên công việc</label>
+                        <!-- Task Name -->
+                        <div class="form-group">
+                            <label for="task-name" class="col-sm-3 control-label">Tên công việc</label>
 
-                        <div class="col-sm-6">
-                            <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}">
-                            <input type="text" name="deadline" id="task-name" class="form-control" value="{{ old('task') }}">
-                            <input type="text" name="school" id="task-name" class="form-control" value="{{ old('task') }}">
+                            <div class="col-sm-6">
+                                <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}">
+                                <input type="text" name="deadline" id="task-name" class="form-control" value="{{ old('task') }}">
+                                <input type="text" name="school" id="task-name" class="form-control" value="{{ old('task') }}">
+                            </div>
+
                         </div>
 
-                    </div>
-
-                    <!-- Add Task Button -->
-                    <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-6">
-                            <button type="submit" class="btn btn-default">
-                                <i class="fa fa-btn fa-plus"></i>Thêm công việc
-                            </button>
+                        <!-- Add Task Button -->
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-6">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fa fa-btn fa-plus"></i>Thêm công việc
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Current Tasks -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Danh sách công việc hiện tại
+                    </form>
+                </div>
             </div>
 
-            <div class="panel-body">
-                <table class="table table-striped task-table">
-                    <thead>
-                    <th>Tên công việc</th>
-                    <th>&nbsp;</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="table-text"><div>Làm bài tập Laravel </div></td>
-                        <!-- Task Complete Button -->
-                        <td>
-                            <a href="{{ url('task/complete/1') }}" type="submit" class="btn btn-success">
-                                <i class="fa fa-btn fa-check"></i>Hoàn thành
-                            </a>
-                        </td>
-                        <!-- Task Delete Button -->
-                        <td>
-                            <form action="{{ url('destroy/{1} ') }}" method="POST">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
+            <!-- Current Tasks -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Danh sách công việc hiện tại
+                </div>
 
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fa fa-btn fa-trash"></i>Xoá
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-text"><div>Làm bài tập PHP   </div></td>
-                        <!-- Task Complete Button -->
-                        <td>
-                            <a href="{{ url('task/complete/1') }}" type="submit" class="btn btn-success">
-                                <i class="fa fa-btn fa-check"></i>Hoàn thành
-                            </a>
-                        </td>
-                        <!-- Task Delete Button -->
-                        <td>
-                            <form action="{{ url('task/2') }}" method="POST">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
+                <div class="panel-body">
+                    <table class="table table-striped task-table">
+                        <thead>
+                            <th>Tên công việc</th>
+                            <th>&nbsp;</th>
+                        </thead>
+                        <tbody>
+                            @foreach ($tasks as $task)
 
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fa fa-btn fa-trash"></i>Xoá
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-text"><div><strike>Làm project Laravel </strike></div></td>
-                        <!-- Task Complete Button -->
-                        <td>
-                            <a href="{{ url('task/reComplete/1') }}" type="submit" class="btn btn-success">
-                                <i class="fa fa-btn fa-refresh"></i>Làm lại
-                            </a>
-                        </td>
-                        <!-- Task Delete Button -->
-                        <td>
-                            <form action="{{ url('task/3') }}" method="POST">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
 
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fa fa-btn fa-trash"></i>Xoá
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                            <tr>
+                                <td class="table-text"><div>{{$task->name}}</div></td>
+                                <!-- Task Complete Button -->
+                                <td>
+                                    <a href="{{url('show/{.{{$task->id}}.}')  }}" type="submit" class="btn btn-success">
+                                        <i class="fa fa-btn fa-check"></i>Hoàn thành
+                                    </a>
+                                </td>
+                                <!-- Task Delete Button -->
+                                <td>
+                                    <form action="{{ url('destroy/{1} ') }}" method="POST">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fa fa-btn fa-trash"></i>Xoá
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- JavaScripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-{{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <!-- JavaScripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>
