@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTasksTable extends Migration
+class AddContentColumnTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->integer('status');
-            $table->dateTime('deadline');
-            $table->timestamps();
-            $table->text('content')
-        });
-    }
+     Schema::table('tasks', function (Blueprint $table) {
+        $table->text('content');
+
+    });
+ }
 
     /**
      * Reverse the migrations.

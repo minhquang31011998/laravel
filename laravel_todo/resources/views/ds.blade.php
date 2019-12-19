@@ -66,8 +66,8 @@
 
                             <div class="col-sm-6">
                                 <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}">
-                                <input type="text" name="deadline" id="task-name" class="form-control" value="{{ old('task') }}">
-                                <input type="text" name="school" id="task-name" class="form-control" value="{{ old('task') }}">
+                                <input type="datetime-local" name="deadline" id="task-deadline" class="form-control" value="{{ old('deadline') }}">
+                                <input type="text" name="content" id="task-content" class="form-control" value="{{ old('task') }}">
                             </div>
 
                         </div>
@@ -94,7 +94,8 @@
                     <table class="table table-striped task-table">
                         <thead>
                             <th>Tên công việc</th>
-                            <th>&nbsp;</th>
+                            <th>Nội dung</th>
+                            <th>Deadline</th>
                         </thead>
                         <tbody>
                             @foreach ($tasks as $task)
@@ -102,15 +103,17 @@
 
                             <tr>
                                 <td class="table-text"><div>{{$task->name}}</div></td>
+                                <td class="table-text"><div>{{$task->content}}</div></td>
+                                <td class="table-text"><div>{{$task->deadline}}</div></td>
                                 <!-- Task Complete Button -->
                                 <td>
-                                    <a href="{{url('show/{.{{$task->id}}.}')  }}" type="submit" class="btn btn-success">
+                                    <a href="{{url('show/'.$task->id)}}" type="submit" class="btn btn-success">
                                         <i class="fa fa-btn fa-check"></i>Hoàn thành
                                     </a>
                                 </td>
                                 <!-- Task Delete Button -->
                                 <td>
-                                    <form action="{{ url('destroy/{1} ') }}" method="POST">
+                                    <form action="{{ url('destroy/'.$task->id)}}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
 

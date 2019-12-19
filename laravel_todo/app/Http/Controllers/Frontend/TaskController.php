@@ -14,15 +14,15 @@ class TaskController extends Controller
      */
     public function index()
     {
-       $tasks = Task::where('status', 1)
-       ->orderBy('name', 'desc')
-       ->take(5)
-       ->get();
+     $tasks = Task::where('status', 1)
+     ->orderBy('name', 'desc')
+     ->take(5)
+     ->get();
      // dd($tasks);
-       return view('ds')->with([
+     return view('ds')->with([
         'tasks'=>$tasks
     ]);
-   }
+ }
 
     /**
      * Show the form for creating a new resource.
@@ -42,12 +42,15 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        // $name=$request->get('name');
-        // dd($name);
-        // dd($request->all());
-        $input = $request->only(['name', 'deadline']);
-        dd($input);
 
+       $task = new Task();
+        $task->name = $request->get('name');
+        $task->status = 1;
+        $task->deadline = $request->get('deadline');
+        $task->content = $request->get('content');
+        $task->save();
+        return redirect()->back();
+        
     }
 
     /**
@@ -58,9 +61,10 @@ class TaskController extends Controller
      */
     public function show($id)
     {
+
         $task = Task::find($id);
-        $task = Task::findOrFail($id);
-        $task = Task::firstOrFail($id);
+        // $task = Task::findOrFail($id);
+        // $task = Task::firstOrFail($id);
         dd($task->name);
     }
 
@@ -95,8 +99,10 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        $input=$request->get(['id']);
-        dd($input);
+        $task = Task::find($id);
+
+        $task->delete();
+        return redirect()->back();
     }
     public function complete($id)
     {
