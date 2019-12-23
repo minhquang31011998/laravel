@@ -47,6 +47,19 @@
                     </select>
                 </div>
             </div>
+             <div class="form-group">
+                <label for="task-name" class="col-sm-3 control-label">Mức độ</label>
+
+                <div class="col-sm-6">
+                    <select name=priority>
+                        
+                        <option value=0>Bình thường</option>
+                        <option value=1>Quan trọng/option>
+                        <option value=2>Khẩn cấp</option>
+
+                    </select>
+                </div>
+            </div>
 
             <!-- Add Task Button -->
             <div class="form-group">

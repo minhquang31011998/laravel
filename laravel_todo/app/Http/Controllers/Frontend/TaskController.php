@@ -50,6 +50,7 @@ class TaskController extends Controller
        $task->status = $request->get('status');
        $task->deadline = $request->get('deadline');
        $task->content = $request->get('content');
+       $task->priority = $request->get('int');
        $task->save();
        return redirect()->route('task.index');        
    }
@@ -106,6 +107,7 @@ class TaskController extends Controller
         $task->status = $status;
         $task->content = $content;
         $task->deadline = $deadline;
+
         $task->save();
         return redirect()->route('task.index');
     }
