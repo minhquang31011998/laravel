@@ -95,18 +95,24 @@ Route::group([
 // 	Route::get('setting2','SettingController@index');
 // 	Route::get('setting3','Test\SettingController@index');
 // });
-Route::resource('task', 'Frontend\TaskController');
+// Route::resource('task', 'Frontend\TaskController');
 Route::group([
 	'namespace' =>'Frontend',
 ],function (){
-	Route::get('index', 'TaskController@index');
-	Route::get('create', 'TaskController@create');
-	Route::post('store', 'TaskController@store');
-	Route::get('show/{id}', 'TaskController@show');
-	Route::get('edit/{id}', 'TaskController@edit');
-	Route::put('update/{id}', 'TaskController@update');
-	Route::delete('destroy/{id}', 'TaskController@destroy');
-	Route::get('task/complete/{id}', 'TaskController@complete');
-	Route::get('task/reComplete/{id}', 'TaskController@reComplete');
-
+	// Route::get('index', 'TaskController@index');
+	// Route::get('create', 'TaskController@create');
+	// Route::post('store', 'TaskController@store');
+	// Route::get('show/{id}', 'TaskController@show');
+	// Route::get('edit/{id}', 'TaskController@edit');
+	// Route::put('update/{id}', 'TaskController@update');
+	// Route::delete('destroy/{id}', 'TaskController@destroy');
+	Route::get('task', 'TaskController@index')->name('task.index');
+	Route::post('task', 'TaskController@store')->name('task.store');
+	Route::get('task/create', 'TaskController@create')->name('task.create');
+	Route::get('task/{task}', 'TaskController@show')->name('task.show');
+	Route::match(['put','patch'], 'task/{task}', 'TaskController@update')->name('task.update');
+	Route::get('task/{task}/edit', 'TaskController@edit')->name('task.edit');
+	Route::delete('task/{task}', 'TaskController@destroy')->name('task.destroy');
+	Route::get('task/complete/{task}', 'TaskController@complete')->name('task.complete');
+	Route::get('task/recomplete/{task}', 'TaskController@reComplete')->name('task.recomplete');
 });

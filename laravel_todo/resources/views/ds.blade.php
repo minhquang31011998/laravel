@@ -47,7 +47,7 @@
 
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
-            <div class="panel panel-default">
+            {{-- <div class="panel panel-default">
                 <div class="panel-heading">
                     Thêm công việc mới
                 </div>
@@ -82,7 +82,7 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Current Tasks -->
             <div class="panel panel-default">
@@ -96,44 +96,65 @@
                             <th>Tên công việc</th>
                             <th>Nội dung</th>
                             <th>Deadline</th>
-                        </thead>
-                        <tbody>
-                            @foreach ($tasks as $task)
+                            <th>Action<th>
+                            </thead>
+                            <tbody>
+                                @foreach ($tasks as $task)
 
 
-                            <tr>
-                                <td class="table-text"><div>{{$task->name}}</div></td>
-                                <td class="table-text"><div>{{$task->content}}</div></td>
-                                <td class="table-text"><div>{{$task->deadline}}</div></td>
-                                <!-- Task Complete Button -->
-                                <td>
-                                    <a href="{{url('show/'.$task->id)}}" type="submit" class="btn btn-success">
-                                        <i class="fa fa-btn fa-check"></i>Hoàn thành
-                                    </a>
-                                </td>
-                                <!-- Task Delete Button -->
-                                <td>
-                                    <form action="{{ url('destroy/'.$task->id)}}" method="POST">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
+                                <tr>
+                                    <td class="table-text"><div>{{$task->name}}</div></td>
+                                    <td class="table-text"><div>{{$task->content}}</div></td>
+                                    <td class="table-text"><div>{{$task->deadline}}</div></td>
+                                    <td>
+                                        <a href="{{ route('task.show', $task->id) }}" type="submit" class="btn btn-success">
+                                            <i class="fa fa-btn fa-check"></i>Chi tiết
+                                        </a>
+                                        <a href="{{ route('task.edit', $task->id) }}" type="submit" class="btn btn-success">
+                                            <i class="fa fa-btn fa-check"></i>Sửa
+                                        </a>
+                                    </td>
+                                    <!-- Task Complete Button -->
 
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="fa fa-btn fa-trash"></i>Xoá
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                    @if($task->status==1)
+                                    <td>
+                                        <a href="{{route('task.complete',$task->id)}}" type="submit" class="btn btn-success">
+                                            <i class="fa fa-btn fa-check"></i>Hoàn thành
+                                        </a>
+                                    </td>
+                                    @endif
+                                    @if($task->status==2)
+                                    <td>
+                                        <a href="{{route('task.recomplete',$task->id)}}" type="submit" class="btn btn-success">
+                                            <i class="fa fa-btn fa-check"></i>Làm lại
+                                        </a>
+                                    </td>
+                                    @endif
+
+
+                                    <!-- Task Delete Button -->
+                                    <td>
+                                        <form action="{{ route('task.destroy', $task->id) }}" method="POST">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fa fa-btn fa-trash"></i>Xoá
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
-</body>
-</html>
+        <!-- JavaScripts -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    </body>
+    </html>

@@ -14,15 +14,17 @@ class TaskController extends Controller
      */
     public function index()
     {
-     $tasks = Task::where('status', 1)
-     ->orderBy('name', 'desc')
-     ->take(5)
-     ->get();
-     // dd($tasks);
-     return view('ds')->with([
-        'tasks'=>$tasks
-    ]);
- }
+        $tasks = Task::all();
+        // dd($tasks);
+    //    $tasks = Task::where('status', 1)
+    //    ->orderBy('name', 'desc')
+    //    ->take(5)
+    //    ->get();
+    //  // dd($tasks);
+        return view('ds')->with([
+            'tasks'=>$tasks
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -31,8 +33,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
-    }
+     return view('create');
+ }
 
     /**
      * Store a newly created resource in storage.
@@ -44,14 +46,13 @@ class TaskController extends Controller
     {
 
        $task = new Task();
-        $task->name = $request->get('name');
-        $task->status = 1;
-        $task->deadline = $request->get('deadline');
-        $task->content = $request->get('content');
-        $task->save();
-        return redirect()->back();
-        
-    }
+       $task->name = $request->get('name');
+       $task->status = $request->get('status');
+       $task->deadline = $request->get('deadline');
+       $task->content = $request->get('content');
+       $task->save();
+       return redirect()->route('task.index');        
+   }
 
     /**
      * Display the specified resource.
@@ -65,7 +66,9 @@ class TaskController extends Controller
         $task = Task::find($id);
         // $task = Task::findOrFail($id);
         // $task = Task::firstOrFail($id);
-        dd($task->name);
+        return view('show')->with([
+            'task' => $task
+        ]);
     }
 
     /**
@@ -76,8 +79,11 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        //
-    }
+       $task = Task::find($id);
+       return view('edit')->with([
+        'task' => $task
+    ]);
+   }
 
     /**
      * Update the specified resource in storage.
@@ -88,7 +94,20 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Lấy dữ liệu từ Form
+        $name = $request->get('name');
+        $deadline = $request->get('deadline');
+        $content = $request->get('content');
+        $status = $request->get('status');
+
+        // Cập nhật
+        $task = Task::find($id);
+        $task->name = $name;
+        $task->status = $status;
+        $task->content = $content;
+        $task->deadline = $deadline;
+        $task->save();
+        return redirect()->route('task.index');
     }
 
     /**
@@ -106,13 +125,18 @@ class TaskController extends Controller
     }
     public function complete($id)
     {
-        $input=$request->get(['id']);
-        dd($input);
-    }
-    public function reComplete($id)
-    {
-        $input=$request->get(['id']);
-        dd($input);
-    }
+     $task = Task::find($id);
+     $task->status = 2;
+     $task->save();
+     return redirect()->route('task.index');
+
+ }
+ public function reComplete($id)
+ {
+    $task = Task::find($id);
+     $task->status = 1;
+     $task->save();
+     return redirect()->route('task.index');
+}
 
 }
